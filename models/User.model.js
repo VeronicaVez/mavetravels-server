@@ -18,9 +18,17 @@ const userSchema = new Schema(
     },
     role: {
       type: String,
-      enum: ["USER", "ADMIN"],
-      default: "USER"
-    }
+      enum: ["user", "admin"],
+      default: "user"
+    },
+    reviews: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Review'
+    }],
+    travels: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Travel'
+    }]
   },
   {
     timestamps: true

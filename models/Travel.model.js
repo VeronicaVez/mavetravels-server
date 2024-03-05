@@ -39,7 +39,11 @@ const travelSchema = new Schema(
         }],
         source: {
             type: String
-        }
+        },
+        interestedPeople: [{
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }]
     },
     {
         timestamps: true
