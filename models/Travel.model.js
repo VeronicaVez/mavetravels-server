@@ -15,7 +15,7 @@ const travelSchema = new Schema(
         },
         themes: [{
             type: String,
-            enum: ["Beach life", "Mountain life", "Party", "Sports", "Wild life", "Food", "Pet Friendly"]
+            enum: ["Beach life", "Trekking", "Party", "Sports", "Wild life", "Food", "Pet Friendly"]
         }],
         itinerary: [{
             day: {
@@ -23,7 +23,10 @@ const travelSchema = new Schema(
             },
             activities: [{
                 type: String
-            }]
+            }],
+            activityDescription: {
+                type: String
+            }
         }],
         dates: {
             start: Date,
