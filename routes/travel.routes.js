@@ -6,7 +6,7 @@ const Review = require("../models/Review.model")
 
 router.post('/', (req, res, next) => {
 
-    const { country, includesAccomodation, includesTransport, themes, itinerary, date, price } = req.body
+    const { destination, includesAccomodation, includesTransport, themes, itinerary, date, price } = req.body
 
     Travel
         .create(req.body)
@@ -64,7 +64,7 @@ router.get('/:travelId/reviews', (req, res, next) => {
 router.put('/:travelId', (req, res, next) => {
 
     const { travelId } = req.params
-    const { country, includesAccomodation, includesTransport, themes, itinerary, date, price } = req.body
+    const { destination, includesAccomodation, includesTransport, themes, itinerary, date, price } = req.body
 
 
     if (!mongoose.Types.ObjectId.isValid(travelId)) {

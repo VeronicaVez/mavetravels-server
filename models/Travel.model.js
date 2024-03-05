@@ -21,10 +21,13 @@ const travelSchema = new Schema(
             day: {
                 type: Number
             },
+            title: {
+                type: String
+            },
             activities: [{
                 type: String
             }],
-            activityDescription: {
+            dayDescription: {
                 type: String
             }
         }],
