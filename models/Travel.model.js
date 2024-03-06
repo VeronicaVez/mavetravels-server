@@ -6,6 +6,12 @@ const travelSchema = new Schema(
             type: String,
             required: [true, 'Destination is required.']
         },
+        continent: [{
+            type: String,
+            enum: ["Europe", "Asia", "Africa", "North America", "South America", "Australia & Oceania"],
+            required: [true, 'Continent is required.']
+
+        }],
         includesAccomodation: {
             type: Boolean,
             default: true
