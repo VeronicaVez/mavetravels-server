@@ -9,7 +9,6 @@ const { isAuthenticated } = require("../middleware/jwt.middleware")
 const saltRounds = 10
 
 
-
 router.post('/signup', (req, res, next) => {
 
   const { email, password, username } = req.body
