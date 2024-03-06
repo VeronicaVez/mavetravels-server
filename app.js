@@ -22,6 +22,9 @@ app.use("/api/travels", travelRoutes)
 const reviewRoutes = require("./routes/review.routes")
 app.use("/api/reviews", reviewRoutes)
 
+const uploadRoutes = require("./routes/upload.routes")
+app.use("/api/upload", uploadRoutes)
+
 
 
 require("./error-handling")(app)
