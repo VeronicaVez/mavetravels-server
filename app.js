@@ -6,7 +6,7 @@ const app = express()
 
 require("./config")(app)
 
-
+const { isAuthenticated } = require("./middleware/jwt.middleware")
 
 // ------ ROUTES ------
 
