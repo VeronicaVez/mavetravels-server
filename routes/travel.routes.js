@@ -11,7 +11,8 @@ router.post('/', (req, res, next) => {
     Travel
         .create(req.body)
         .then(newTravel => res.json(newTravel))
-        .catch(err => res.status(500).json(err))
+        .catch(err => next(err))
+
 })
 
 router.get('/', (req, res, next) => {
@@ -19,7 +20,8 @@ router.get('/', (req, res, next) => {
     Travel
         .find()
         .then(allTravels => res.json(allTravels))
-        .catch(err => res.status(500).json(err))
+        .catch(err => next(err))
+
 
 })
 
@@ -35,7 +37,8 @@ router.get('/:travelId', (req, res, next) => {
     Travel
         .findById(travelId)
         .then(travel => res.json(travel))
-        .catch(err => res.status(500).json(err))
+        .catch(err => next(err))
+
 })
 
 
@@ -44,7 +47,7 @@ router.get('/:travelId/reviews', (req, res, next) => {
 
     if (!mongoose.Types.ObjectId.isValid(travelId)) {
         res.status(400).json({ message: 'Specified travel id is not valid' })
-        return;
+        return
     }
 
     Travel
@@ -56,7 +59,8 @@ router.get('/:travelId/reviews', (req, res, next) => {
             }
             res.json(travel.reviews)
         })
-        .catch(err => res.status(500).json(err))
+        .catch(err => next(err))
+
 })
 
 
@@ -75,7 +79,8 @@ router.put('/:travelId', (req, res, next) => {
     Travel
         .findByIdAndUpdate(travelId, req.body, { new: true, runValidators: true })
         .then(updatedTravel => res.json(updatedTravel))
-        .catch(err => res.status(500).json(err))
+        .catch(err => next(err))
+
 })
 
 
@@ -92,7 +97,8 @@ router.delete('/:travelId', (req, res, next) => {
     Travel
         .findByIdAndDelete(travelId)
         .then(() => res.sendStatus(204))
-        .catch(err => res.status(500).json(err))
+        .catch(err => next(err))
+
 })
 
 module.exports = router

@@ -88,7 +88,8 @@ router.put('/:userId', (req, res, next) => {
     User
         .findByIdAndUpdate(userId, req.body, { new: true, runValidators: true })
         .then(updatedUser => res.json(updatedUser))
-        .catch(err => res.status(500).json(err))
+        .catch(err => next(err))
+
 })
 
 router.delete('/:userId', (req, res, next) => {
@@ -103,11 +104,12 @@ router.delete('/:userId', (req, res, next) => {
     User
         .findByIdAndDelete(userId)
         .then(() => res.sendStatus(204))
-        .catch(err => res.status(500).json(err))
+        .catch(err => next(err))
+
 })
 
 
 module.exports = router
 
 
-// El post de users ya es el sign up pero para ver todos los usuarios, editarlos o eliminarlos.
+
