@@ -30,7 +30,7 @@ router.post('/:travelId', (req, res, next) => {
         .then((updatedTravel) => {
             return User.findByIdAndUpdate(userId, { $push: { reviews: updatedTravel._id } })
         })
-        .then(updatedUser => res.json(updatedUser))
+        .then(() => res.sendStatus(200))
         .catch(err => next(err))
 
 })
@@ -40,16 +40,14 @@ router.get('/', (req, res, next) => {
 
     Review
         .find()
+        // TODO: revistar TODOS los .find() para buscar oportunidades de .sort() y .select()
         .populate("travel", "user")
         .then(allReviews => res.json(allReviews))
         .catch(err => next(err))
 
-
 })
 
 router.get('/:reviewId', (req, res, next) => {
-
-    console.log('WAT')
 
     const { reviewId } = req.params
 

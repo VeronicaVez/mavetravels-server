@@ -6,6 +6,7 @@ const Review = require("../models/Review.model")
 
 router.post('/', (req, res, next) => {
 
+    // TODO
     const { destination, includesAccomodation, includesTransport, themes, itinerary, date, price } = req.body
 
     Travel
@@ -60,7 +61,6 @@ router.get('/:travelId/reviews', (req, res, next) => {
             res.json(travel.reviews)
         })
         .catch(err => next(err))
-
 })
 
 
@@ -76,6 +76,7 @@ router.put('/:travelId', (req, res, next) => {
         return
     }
 
+    // TODO
     Travel
         .findByIdAndUpdate(travelId, req.body, { new: true, runValidators: true })
         .then(updatedTravel => res.json(updatedTravel))
@@ -102,5 +103,3 @@ router.delete('/:travelId', (req, res, next) => {
 })
 
 module.exports = router
-
-
