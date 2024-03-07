@@ -53,6 +53,8 @@ router.post('/login', (req, res, next) => {
 
   const { email, password } = req.body
 
+  console.log(req.body)
+
   if (email === '' || password === '') {
     res.status(400).json({ message: "Provide email and password." })
     return
