@@ -6,11 +6,10 @@ const Review = require("../models/Review.model")
 
 router.post('/', (req, res, next) => {
 
-    // TODO
-    const { destination, includesAccomodation, includesTransport, themes, itinerary, date, price } = req.body
+    const { destination, continent, includesAccomodation, includesTransport, themes, itinerary, dates, price, source } = req.body
 
     Travel
-        .create(req.body)
+        .create({ destination, continent, includesAccomodation, includesTransport, themes, itinerary, dates, price, source })
         .then(newTravel => res.json(newTravel))
         .catch(err => next(err))
 
@@ -68,17 +67,14 @@ router.get('/:travelId/reviews', (req, res, next) => {
 router.put('/:travelId', (req, res, next) => {
 
     const { travelId } = req.params
-    const { destination, includesAccomodation, includesTransport, themes, itinerary, date, price } = req.body
-
 
     if (!mongoose.Types.ObjectId.isValid(travelId)) {
         res.status(400).json({ message: 'Specified id is not valid' })
         return
     }
 
-    // TODO
     Travel
-        .findByIdAndUpdate(travelId, req.body, { new: true, runValidators: true })
+        .findByIdAndUpdate(travelId, { destination, continent, includesAccomodation, includesTransport, themes, itinerary, dates, price, source }, { new: true, runValidators: true })
         .then(updatedTravel => res.json(updatedTravel))
         .catch(err => next(err))
 
