@@ -21,6 +21,9 @@ const reviewSchema = new Schema(
             max: 5,
             require: true
         },
+        source: {
+            type: String
+        },
         travel: {
             type: Schema.Types.ObjectId,
             ref: "Travel"
