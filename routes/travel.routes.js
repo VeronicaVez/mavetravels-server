@@ -21,8 +21,17 @@ router.get('/', (req, res, next) => {
         .find()
         .then(allTravels => res.json(allTravels))
         .catch(err => next(err))
+})
 
 
+router.get('/continent/:continentName', (req, res, next) => {
+
+    const { continentName } = req.params
+
+    Travel
+        .find({ continent: continentName })
+        .then(allTravels => res.json(allTravels))
+        .catch(err => next(err))
 })
 
 router.get('/:travelId', (req, res, next) => {
@@ -67,6 +76,7 @@ router.get('/:travelId/reviews', (req, res, next) => {
 router.put('/:travelId', (req, res, next) => {
 
     const { travelId } = req.params
+    const { destination, continent, includesAccomodation, includesTransport, themes, itinerary, dates, price, source } = req.body
 
     if (!mongoose.Types.ObjectId.isValid(travelId)) {
         res.status(400).json({ message: 'Specified id is not valid' })
@@ -74,7 +84,11 @@ router.put('/:travelId', (req, res, next) => {
     }
 
     Travel
-        .findByIdAndUpdate(travelId, { destination, continent, includesAccomodation, includesTransport, themes, itinerary, dates, price, source }, { new: true, runValidators: true })
+        .findByIdAndUpdate(
+            travelId,
+            { destination, continent, includesAccomodation, includesTransport, themes, itinerary, dates, price, source },
+            { new: true, runValidators: true }
+        )
         .then(updatedTravel => res.json(updatedTravel))
         .catch(err => next(err))
 
