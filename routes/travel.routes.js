@@ -21,8 +21,17 @@ router.get('/', (req, res, next) => {
         .find()
         .then(allTravels => res.json(allTravels))
         .catch(err => next(err))
+})
 
 
+router.get('/continent/:continentName', (req, res, next) => {
+
+    const { continentName } = req.params
+
+    Travel
+        .find({ continent: continentName })
+        .then(allTravels => res.json(allTravels))
+        .catch(err => next(err))
 })
 
 router.get('/:travelId', (req, res, next) => {

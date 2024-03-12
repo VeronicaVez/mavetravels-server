@@ -58,19 +58,6 @@ router.get('/:username/reviews', (req, res, next) => {
 })
 
 
-router.put('/:userId', (req, res, next) => {
-
-    const { username } = req.params
-    const { email, password, role } = req.body
-
-
-    User
-        .findOneAndUpdate(username, { username, email, password, role }, { new: true, runValidators: true })
-        .then(updatedUser => res.json(updatedUser))
-        .catch(err => next(err))
-
-})
-
 router.delete('/:username', (req, res, next) => {
 
     const { username } = req.params
