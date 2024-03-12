@@ -13,7 +13,7 @@ router.get('/', (req, res, next) => {
         .catch(err => next(err))
 })
 
-router.get('/:userId', (req, res, next) => {
+router.get('/:username', (req, res, next) => {
 
     const { userId } = req.params
 
@@ -28,7 +28,7 @@ router.get('/:userId', (req, res, next) => {
         .catch(err => next(err))
 })
 
-router.get('/:userId/travels', (req, res, next) => {
+router.get('/:username/travels', (req, res, next) => {
 
     const { userId } = req.params
 
@@ -49,7 +49,7 @@ router.get('/:userId/travels', (req, res, next) => {
         .catch(err => next(err))
 })
 
-router.get('/:userId/reviews', (req, res, next) => {
+router.get('/:username/reviews', (req, res, next) => {
 
     const { userId } = req.params
 
@@ -70,25 +70,7 @@ router.get('/:userId/reviews', (req, res, next) => {
         .catch(err => next(err))
 })
 
-
-router.put('/:userId', (req, res, next) => {
-
-    const { userId } = req.params
-    const { username, email, password, role } = req.body
-
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-        res.status(400).json({ message: 'Specified user id is not valid' })
-        return
-    }
-
-    User
-        .findByIdAndUpdate(userId, { username, email, password, role }, { new: true, runValidators: true })
-        .then(updatedUser => res.json(updatedUser))
-        .catch(err => next(err))
-
-})
-
-router.delete('/:userId', (req, res, next) => {
+router.delete('/:username', (req, res, next) => {
 
     const { userId } = req.params
 
