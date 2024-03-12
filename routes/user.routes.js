@@ -58,7 +58,7 @@ router.get('/:username/reviews', (req, res, next) => {
 })
 
 
-router.put('/edit/:username', (req, res, next) => {
+router.put('/:userId', (req, res, next) => {
 
     const { username } = req.params
     const { email, password, role } = req.body

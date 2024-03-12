@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 const User = require("../models/User.model")
+const Admin = require("../models/Admin.model")
 const { isAuthenticated } = require("../middleware/jwt.middleware")
 
 const saltRounds = 10
@@ -47,11 +48,9 @@ router.post('/signup', (req, res, next) => {
     .catch(err => next(err))
 })
 
-
-
 router.post('/login', (req, res, next) => {
 
-  const { email, password } = req.body
+  const { email, password, role} = req.body
 
   console.log(req.body)
 
@@ -92,10 +91,8 @@ router.post('/login', (req, res, next) => {
     .catch(err => next(err))
 })
 
-
 router.get('/verify', isAuthenticated, (req, res, next) => {
   res.json({ userInfo: req.payload })
 })
-
 
 module.exports = router

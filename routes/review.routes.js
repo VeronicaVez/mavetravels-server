@@ -17,7 +17,7 @@ router.post('/:travelId', (req, res, next) => {
     }
 
     if (!mongoose.Types.ObjectId.isValid(userId)) {
-        res.status(400).json({ message: 'Specified user id is not valid' })
+          res.status(400).json({ message: 'Specified user id is not valid' })
         return
     }
 
@@ -25,10 +25,12 @@ router.post('/:travelId', (req, res, next) => {
     Review
         .create({ user: userId, title, description, rating, images, travel: travelId })
         .then((newReview) => {
-            return Travel.findByIdAndUpdate(travelId, { $push: { reviews: newReview._id } })
+            return Travel
+                .findByIdAndUpdate(travelId, { $push: { reviews: newReview._id } })
         })
         .then((updatedTravel) => {
-            return User.findByIdAndUpdate(userId, { $push: { reviews: updatedTravel._id } })
+            return User
+                .findByIdAndUpdate(userId, { $push: { reviews: updatedTravel._id } })
         })
         .then(() => res.sendStatus(200))
         .catch(err => next(err))
@@ -42,7 +44,7 @@ router.get('/', (req, res, next) => {
         .find()
         // TODO: revistar TODOS los .find() para buscar oportunidades de .sort() y .select()
         .populate("travel", "user")
-        .then(allReviews => res.json(allReviews))
+        .then(allReviews => res.json(allReviews)) 
         .catch(err => next(err))
 
 })
@@ -77,10 +79,26 @@ router.put('/:reviewId', (req, res, next) => {
     Review
         .findByIdAndUpdate(
             reviewId,
-            { user, title, description, rating, images },
+            { title, description, rating, images },
             { new: true, runValidators: true }
         )
         .then(updatedReview => res.json(updatedReview))
+        .catch(err => next(err))
+
+})
+
+router.post('/', (req, res, next) => {
+
+    const { user: userId, title, description, rating, source, travel: travelId } = req.body
+
+    Review
+        .create({ userId, title, description, rating, source, travelId })
+    .then((newReview) => {
+        return Travel.findByIdAndUpdate(travelId, { $push: { reviews: newReview._id } });
+    })
+    .then((updatedTravel) => {
+        return User.findByIdAndUpdate(userId, { $push: { reviews: updatedTravel._id } });
+    })
         .catch(err => next(err))
 
 })
@@ -102,5 +120,3 @@ router.delete('/:reviewId', (req, res, next) => {
 })
 
 module.exports = router
-
-
