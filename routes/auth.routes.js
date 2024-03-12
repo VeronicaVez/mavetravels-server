@@ -72,8 +72,8 @@ router.post('/login', (req, res, next) => {
 
       if (passwordCorrect) {
 
-        const { name, email, username, _id } = foundUser
-        const payload = { name, email, username, _id }
+        const { username, email, role } = foundUser
+        const payload = { username, email, role }
 
         const authToken = jwt.sign(
           payload,
