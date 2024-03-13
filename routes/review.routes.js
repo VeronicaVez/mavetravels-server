@@ -11,7 +11,7 @@ router.get('/', (req, res, next) => {
         .find()
         // TODO: revistar TODOS los .find() para buscar oportunidades de .sort() y .select()
         .populate("travel", "user")
-        .then(allReviews => res.json(allReviews)) 
+        .then(allReviews => res.json(allReviews))
         .catch(err => next(err))
 
 })
@@ -81,7 +81,7 @@ router.post('/', (req, res, next) => {
         })
         .then(() => res.sendStatus(200))
         .catch(err => next(err))
-})  
+})
 
 router.delete('/:reviewId', (req, res, next) => {
 
