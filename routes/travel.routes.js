@@ -4,6 +4,17 @@ const router = require("express").Router()
 const Travel = require("../models/Travel.model")
 const Review = require("../models/Review.model")
 
+router.post('/:travelId', (req, res, next) => {
+
+    const { title, description, rating, images, userId } = req.body
+
+    Review
+        .create({ title, description, rating, images, userId })
+        .then(newReview => res.json(newReview))
+        .catch(err => next(err))
+
+})
+
 router.post('/', (req, res, next) => {
 
     const { destination, continent, includesAccomodation, includesTransport, themes, itinerary, dates, price, source } = req.body
