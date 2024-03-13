@@ -17,7 +17,7 @@ router.post('/:travelId', (req, res, next) => {
     }
 
     if (!mongoose.Types.ObjectId.isValid(userId)) {
-          res.status(400).json({ message: 'Specified user id is not valid' })
+        res.status(400).json({ message: 'Specified user id is not valid' })
         return
     }
 
@@ -44,7 +44,7 @@ router.get('/', (req, res, next) => {
         .find()
         // TODO: revistar TODOS los .find() para buscar oportunidades de .sort() y .select()
         .populate("travel", "user")
-        .then(allReviews => res.json(allReviews)) 
+        .then(allReviews => res.json(allReviews))
         .catch(err => next(err))
 
 })
@@ -93,12 +93,12 @@ router.post('/', (req, res, next) => {
 
     Review
         .create({ userId, title, description, rating, source, travelId })
-    .then((newReview) => {
-        return Travel.findByIdAndUpdate(travelId, { $push: { reviews: newReview._id } });
-    })
-    .then((updatedTravel) => {
-        return User.findByIdAndUpdate(userId, { $push: { reviews: updatedTravel._id } });
-    })
+        .then((newReview) => {
+            return Travel.findByIdAndUpdate(travelId, { $push: { reviews: newReview._id } });
+        })
+        .then((updatedTravel) => {
+            return User.findByIdAndUpdate(userId, { $push: { reviews: updatedTravel._id } });
+        })
         .catch(err => next(err))
 
 })

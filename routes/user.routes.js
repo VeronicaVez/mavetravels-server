@@ -57,6 +57,26 @@ router.get('/:username/reviews', (req, res, next) => {
         .catch(err => next(err))
 })
 
+
+router.put('/add-fav-travel/:travelId', (req, res, next) => {
+
+    const { travelId } = req.params
+    const { username } = req.body
+
+    User.findOneAndUpdate(
+        { username },
+        { $push: { travels: travelId } },
+        { new: true }
+    )
+        .then(updatedUser => {
+            if (!updatedUser) {
+                return res.status(404).json({ message: 'User not found' })
+            }
+            res.json({ message: 'Travel added to user', user: updatedUser })
+        })
+        .catch(err => next(err))
+});
+
 router.delete('/:username', (req, res, next) => {
 
     const { username } = req.params
