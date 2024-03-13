@@ -82,16 +82,30 @@ router.put('/:reviewId', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
 
-    const { user: userId, title, description, rating, source, travel: travelId } = req.body
+    const { title, description, rating, images, userId } = req.body
+
+    if (!mongoose.Types.ObjectId.isValid(travelId)) {
+        res.status(400).json({ message: 'Specified travel id is not valid' })
+        return
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+        res.status(400).json({ message: 'Specified user id is not valid' })
+        return
+    }
+
 
     Review
-        .create({ userId, title, description, rating, source, travelId })
+        .create({ user: userId, title, description, rating, images, travel: travelId })
         .then((newReview) => {
-            return Travel.findByIdAndUpdate(travelId, { $push: { reviews: newReview._id } });
+            return Travel
+                .findByIdAndUpdate(travelId, { $push: { reviews: newReview._id } })
         })
         .then((updatedTravel) => {
-            return User.findByIdAndUpdate(userId, { $push: { reviews: updatedTravel._id } });
+            return User
+                .findByIdAndUpdate(userId, { $push: { reviews: updatedTravel._id } })
         })
+        .then(() => res.sendStatus(200))
         .catch(err => next(err))
 })
 
