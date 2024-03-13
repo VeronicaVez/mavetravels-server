@@ -100,7 +100,6 @@ router.post('/', (req, res, next) => {
             return User.findByIdAndUpdate(userId, { $push: { reviews: updatedTravel._id } });
         })
         .catch(err => next(err))
-
 })
 
 router.delete('/:reviewId', (req, res, next) => {
