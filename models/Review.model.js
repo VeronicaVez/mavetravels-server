@@ -6,6 +6,9 @@ const reviewSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'User'
         },
+        username: {
+            type: String
+        },
         title: {
             type: String,
             maxlength: 40,

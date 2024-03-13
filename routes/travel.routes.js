@@ -15,7 +15,7 @@ router.post('/', (req, res, next) => {
 
 })
 
-router.get('/', (req, res, next) => {
+router.get('/alltravels', (req, res, next) => {
 
     Travel
         .find()
@@ -34,6 +34,21 @@ router.get('/continent/:continentName', (req, res, next) => {
         .catch(err => next(err))
 })
 
+
+router.get('/search', (req, res, next) => {
+
+    const { country_query } = req.query
+
+    const findQuery = country_query ? { destination: { $regex: new RegExp(country_query, 'i') } } : {}
+
+    Travel
+        .find(findQuery)
+        .then(travels => res.json(travels))
+        .catch(err => next(err))
+})
+
+
+
 router.get('/:travelId', (req, res, next) => {
 
     const { travelId } = req.params
@@ -49,6 +64,8 @@ router.get('/:travelId', (req, res, next) => {
         .catch(err => next(err))
 
 })
+
+
 
 
 router.get('/:travelId/reviews', (req, res, next) => {

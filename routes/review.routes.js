@@ -9,28 +9,22 @@ const Travel = require("../models/Travel.model")
 router.post('/:travelId', (req, res, next) => {
 
     const { travelId } = req.params
-    const { title, description, rating, images, userId } = req.body
+    const { title, description, rating, source, username } = req.body
 
     if (!mongoose.Types.ObjectId.isValid(travelId)) {
         res.status(400).json({ message: 'Specified travel id is not valid' })
         return
     }
 
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-        res.status(400).json({ message: 'Specified user id is not valid' })
-        return
-    }
-
-
     Review
-        .create({ user: userId, title, description, rating, images, travel: travelId })
+        .create({ username, title, description, rating, source, travel: travelId })
         .then((newReview) => {
             return Travel
                 .findByIdAndUpdate(travelId, { $push: { reviews: newReview._id } })
         })
         .then((updatedTravel) => {
             return User
-                .findByIdAndUpdate(userId, { $push: { reviews: updatedTravel._id } })
+                .findOneAndUpdate({ username }, { $push: { reviews: updatedTravel._id } })
         })
         .then(() => res.sendStatus(200))
         .catch(err => next(err))
@@ -42,8 +36,7 @@ router.get('/', (req, res, next) => {
 
     Review
         .find()
-        // TODO: revistar TODOS los .find() para buscar oportunidades de .sort() y .select()
-        .populate("travel", "user")
+        .populate("travel user")
         .then(allReviews => res.json(allReviews))
         .catch(err => next(err))
 
