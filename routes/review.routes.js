@@ -99,9 +99,9 @@ router.post('/', (req, res, next) => {
     .then((updatedTravel) => {
         return User.findByIdAndUpdate(userId, { $push: { reviews: updatedTravel._id } });
     })
+    .then((console.log("llegas?")))
         .catch(err => next(err))
-
-})
+})  
 
 router.delete('/:reviewId', (req, res, next) => {
 
