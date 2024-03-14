@@ -45,6 +45,16 @@ router.get('/continent/:continentName', (req, res, next) => {
         .catch(err => next(err))
 })
 
+router.get('/details/:travelId', (req, res, next) => {
+
+    const { travelId } = req.params
+
+    Review
+        .find({ travel: travelId })
+        .then(getReviewsByTravelId => res.json(getReviewsByTravelId))
+        .catch(err => next(err))
+
+})
 
 router.get('/search', (req, res, next) => {
 
