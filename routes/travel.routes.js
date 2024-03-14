@@ -26,7 +26,7 @@ router.post('/', (req, res, next) => {
 
 })
 
-router.get('/alltravels', (req, res, next) => {
+router.get('/All', (req, res, next) => {
 
     Travel
         .find()

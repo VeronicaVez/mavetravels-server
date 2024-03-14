@@ -19,26 +19,12 @@ router.get('/:username', (req, res, next) => {
 
     User
         .findOne({ username })
+        .populate('travels')
         .then(user => res.json(user))
         .catch(err => next(err))
 })
 
-router.get('/:username/travels', (req, res, next) => {
 
-    const { username } = req.params
-
-
-    User
-        .findOne({ username })
-        .populate("travels")
-        .then(user => {
-            if (!user) {
-                return res.status(404).json({ message: 'User not found' })
-            }
-            res.json(user.travels)
-        })
-        .catch(err => next(err))
-})
 
 router.get('/:username/reviews', (req, res, next) => {
 
