@@ -51,4 +51,4 @@ Base URL /reviews
 
 
 # Deploy
-Check it [here](https://mavetravels.netlify.app/).
+Check [here](https://mavetravels.netlify.app/).
